@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#1a1a1a">
+<title>Ananya — Nutrition & Wellness Plan</title>
+<style>
+:root {
+  --serif: 'Georgia', 'Times New Roman', serif;
+  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --ink: #1a1a1a; --ink-mid: #444; --ink-soft: #888;
+  --paper: #faf8f4; --warm: #f2ede4;
+  --accent: #a67c52; --accent-soft: #f5ead9;
+  --green: #5a8a6f; --green-soft: #e8f0ed;
+  --amber-soft: #fdf4e3; --amber: #c17f24;
+  --border: #e2dcd3;
+  --info: #1d56c4; --info-soft: #eef3fd;
+  --nav: 60px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth;background:var(--paper)}
+body{font-family:var(--sans);color:var(--ink);font-size:15px;line-height:1.7;padding-bottom:calc(var(--nav) + 12px)}
+
+/* BOTTOM NAV */
+.bnav{position:fixed;bottom:0;left:0;right:0;height:var(--nav);background:#111;display:flex;z-index:999;border-top:1px solid rgba(255,255,255,0.07);box-shadow:0 -4px 20px rgba(0,0,0,0.3)}
+.bnav a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.38);font-size:9px;letter-spacing:0.06em;text-transform:uppercase;font-family:var(--sans);transition:color 0.15s;padding-bottom:env(safe-area-inset-bottom,0px)}
+.bnav-icon{font-size:18px;line-height:1}
+
+/* COVER */
+#cover{background:var(--ink);color:#fff;padding:52px 22px 52px;position:relative;overflow:hidden}
+#cover::before{content:'';position:absolute;top:-60px;right:-60px;width:260px;height:260px;border-radius:50%;border:1px solid rgba(255,255,255,0.05);pointer-events:none}
+#cover::after{content:'';position:absolute;bottom:-40px;left:20%;width:180px;height:180px;border-radius:50%;border:1px solid rgba(255,255,255,0.03);pointer-events:none}
+.cover-eyebrow{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:18px}
+.cover-name{font-family:var(--serif);font-size:52px;line-height:1.0;margin-bottom:14px;font-weight:400}
+.cover-name em{color:var(--accent);font-style:italic}
+.cover-sub{font-size:14px;color:rgba(255,255,255,0.45);line-height:1.7;margin-bottom:28px;max-width:300px}
+.cover-pills{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:28px}
+.cpill{font-size:11px;padding:4px 11px;border-radius:20px;border:1px solid rgba(255,255,255,0.14);color:rgba(255,255,255,0.55)}
+.cover-coach{font-family:var(--serif);font-size:18px;font-style:italic;color:rgba(255,255,255,0.5)}
+.cover-role{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.22);margin-top:3px}
+
+/* SECTION STRUCTURE */
+.sec-anchor{display:block}
+.ph{padding:28px 20px 16px;border-bottom:1px solid var(--border);background:var(--paper)}
+.ph-eye{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.ph-title{font-family:var(--serif);font-size:28px;font-weight:400;line-height:1.15;color:var(--ink)}
+.cx{padding:18px 16px}
+
+/* CARDS */
+.card{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:12px}
+.card.hi{border-color:var(--accent);border-width:2px}
+.card.hi-green{border-color:var(--green);border-width:2px}
+.ch{padding:13px 15px;background:var(--warm);border-bottom:1px solid var(--border)}
+.ch.acc{background:var(--accent-soft)}
+.ch.green{background:var(--green-soft)}
+.ch.info{background:var(--info-soft)}
+.ch.amber{background:var(--amber-soft)}
+.ch.dark{background:#1a1a1a}
+.ct{font-weight:500;font-size:14px;line-height:1.4}
+.ch.acc .ct{color:var(--accent)}
+.ch.green .ct{color:var(--green)}
+.ch.info .ct{color:var(--info)}
+.ch.amber .ct{color:var(--amber)}
+.ch.dark .ct{color:#fff}
+.cm{font-size:11px;color:var(--ink-soft);margin-top:3px}
+.ch.dark .cm{color:rgba(255,255,255,0.4)}
+.cb{padding:13px 15px;font-size:13.5px;color:var(--ink-mid);line-height:1.8}
+
+/* ALERTS */
+.al{border-radius:10px;padding:12px 14px;margin-bottom:11px;font-size:13.5px;line-height:1.7}
+.al.d{background:var(--accent-soft);border-left:3px solid var(--accent);color:#5a4530}
+.al.w{background:var(--amber-soft);border-left:3px solid var(--amber);color:#5a3a0a}
+.al.ok{background:var(--green-soft);border-left:3px solid var(--green);color:#2d4a3f}
+.al.i{background:var(--info-soft);border-left:3px solid var(--info);color:#1a3a8a}
+.al b,.al strong{font-weight:600}
+
+/* NOTES */
+.nt{border-radius:8px;padding:9px 11px;margin-top:10px;font-size:12.5px;line-height:1.65}
+.nt.d{background:var(--accent-soft);color:#5a4530}
+.nt.w{background:var(--amber-soft);color:#5a3a0a}
+.nt.ok{background:var(--green-soft);color:#2d4a3f}
+.nt.i{background:var(--info-soft);color:#1a3a8a}
+
+/* BADGES */
+.bx{display:inline-block;font-size:9.5px;font-weight:600;padding:2px 7px;border-radius:20px;margin-left:4px;vertical-align:middle}
+.bx.d{background:var(--accent);color:#fff}
+.bx.ok{background:var(--green);color:#fff}
+.bx.i{background:var(--info);color:#fff}
+.bx.w{background:var(--amber);color:#fff}
+.bx.new{background:#1a1a1a;color:#fff}
+
+/* STATS GRID */
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:14px}
+.stats.three{grid-template-columns:1fr 1fr 1fr}
+.st{background:var(--paper);padding:14px 12px}
+.stl{font-size:10px;color:var(--ink-soft);letter-spacing:0.03em;margin-bottom:3px}
+.stv{font-family:var(--serif);font-size:21px;color:var(--ink);line-height:1}
+.stu{font-size:10px;color:var(--ink-soft);margin-top:2px}
+.st.acc{background:var(--accent-soft)}.st.acc .stv{color:var(--accent)}
+.st.gn{background:var(--green-soft)}.st.gn .stv{color:var(--green)}
+.st.wn{background:var(--amber-soft)}.st.wn .stv{color:var(--amber)}
+
+/* TABLE ROWS */
+.tr{border-bottom:1px solid var(--border);padding:13px 15px}
+.tr:last-child{border-bottom:none}
+.trm{font-size:10px;font-weight:600;color:var(--ink-soft);letter-spacing:0.04em;text-transform:uppercase;margin-bottom:3px}
+.trv{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:3px}
+.trd{font-size:12.5px;color:var(--ink-mid);line-height:1.6}
+
+/* MEAL OPTIONS */
+.meal-opt{background:var(--warm);border:1px solid var(--border);border-radius:12px;padding:13px 14px;margin-bottom:10px}
+.meal-opt-title{font-weight:600;font-size:14px;color:var(--ink);margin-bottom:5px}
+.meal-opt-desc{font-size:13px;color:var(--ink-mid);line-height:1.7;margin-bottom:6px}
+.meal-opt-macro{font-size:11px;color:var(--ink-soft);font-family:monospace}
+
+/* SECTION LABELS */
+.div{height:1px;background:var(--border);margin:22px 0}
+.slbl{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:7px}
+.stit{font-family:var(--serif);font-size:22px;font-weight:400;line-height:1.2;margin-bottom:13px}
+
+/* MACRO BAR */
+.macro-bar{margin:14px 0 6px}
+.macro-bar-label{display:flex;justify-content:space-between;font-size:11px;color:var(--ink-soft);margin-bottom:5px}
+.macro-bar-track{height:6px;background:var(--border);border-radius:10px;overflow:hidden;display:flex;gap:2px}
+.mb-p{background:#5a8a6f;height:100%;border-radius:10px}
+.mb-c{background:#a67c52;height:100%;border-radius:10px}
+.mb-f{background:#c17f24;height:100%;border-radius:10px}
+.macro-legend{display:flex;gap:12px;margin-top:6px;flex-wrap:wrap}
+.ml-item{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--ink-soft)}
+.ml-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+/* WEEK STRIP */
+.week-strip{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:16px}
+.wday{background:var(--paper);padding:12px 4px;text-align:center}
+.wday.work{background:#1a1a1a}
+.wday.mob{background:var(--green-soft)}
+.wday.rest{background:var(--warm)}
+.wd-name{font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:5px}
+.wday.work .wd-name{color:rgba(255,255,255,0.4)}
+.wday.mob .wd-name{color:var(--green)}
+.wd-icon{font-size:17px;margin-bottom:3px}
+.wd-label{font-size:10px;font-weight:600;color:var(--ink);line-height:1.3}
+.wday.work .wd-label{color:#a67c52}
+.wday.mob .wd-label{color:var(--green)}
+.wday.rest .wd-label{color:var(--ink-soft)}
+
+/* EXERCISE ROWS */
+.ex-row{border-bottom:1px solid var(--border);padding:11px 15px;display:flex;gap:12px;align-items:flex-start}
+.ex-row:last-child{border-bottom:none}
+.ex-n{width:22px;height:22px;border-radius:6px;background:var(--warm);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:11px;font-weight:600;color:var(--ink-soft);flex-shrink:0;margin-top:2px}
+.ex-row.mob .ex-n{background:var(--green-soft);color:var(--green)}
+.ex-name{font-size:13.5px;font-weight:500;color:var(--ink);margin-bottom:2px}
+.ex-sets{font-size:12px;color:var(--ink-soft)}
+
+/* MOBILITY DIVIDER */
+.mob-sep{padding:7px 15px;background:var(--green-soft);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.mob-sep-label{font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--green)}
+
+/* CIRCUIT */
+.circuit{background:var(--warm);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin:8px 0}
+.circuit-hd{font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px}
+.circuit-row{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:5px 0;border-bottom:1px solid var(--border)}
+.circuit-row:last-child{border-bottom:none}
+.circuit-reps{font-size:11px;color:var(--ink-soft);flex-shrink:0;margin-left:8px}
+
+/* SNACK GRID */
+.snack-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:14px}
+.snack-card{background:var(--warm);border:1px solid var(--border);border-radius:12px;padding:13px 14px}
+.snack-card-title{font-weight:600;font-size:13px;color:var(--ink);margin-bottom:3px}
+.snack-card-desc{font-size:12px;color:var(--ink-mid);margin-bottom:5px}
+.snack-card-macro{font-size:10px;color:var(--ink-soft);font-family:monospace}
+
+/* FOOTER */
+.foot{background:var(--ink);color:rgba(255,255,255,0.38);padding:26px 20px;font-size:12px;line-height:1.7;margin-top:6px}
+.footn{font-family:var(--serif);font-size:20px;font-style:italic;color:rgba(255,255,255,0.6);margin-bottom:6px}
+
+/* SUPPLEMENT INFO */
+.supp-item{background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px 15px;margin-bottom:10px;display:flex;gap:13px;align-items:flex-start}
+.supp-icon{font-size:24px;flex-shrink:0}
+.supp-name{font-weight:600;font-size:14px;color:var(--ink);margin-bottom:2px}
+.supp-desc{font-size:12.5px;color:var(--ink-mid);line-height:1.6}
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div id="cover">
+  <div class="cover-eyebrow">Weight Loss + Wellness Plan</div>
+  <div class="cover-name">Ananya<br><em>Singhai</em></div>
+  <div class="cover-sub">1,600 kcal vegetarian plan. Mobility + upper body strength. Back-friendly approach.</div>
+  <div class="cover-pills">
+    <span class="cpill">22 yrs · 162 cm</span>
+    <span class="cpill">70 kg · Aiming 2–3 kg/month</span>
+    <span class="cpill">1,600 kcal</span>
+    <span class="cpill">77g Protein</span>
+    <span class="cpill">Vegetarian</span>
+    <span class="cpill">3× Mobility + 1× Upper</span>
+  </div>
+  <div class="cover-coach">Your Coach</div>
+  <div class="cover-role">Weight Loss · Strength · Mobility · June 2026</div>
+</div>
+
+<!-- ═══════════════════ OVERVIEW ═══════════════════ -->
+<div id="overview" class="sec-anchor"></div>
+<div class="ph">
+  <div class="ph-eye">Overview</div>
+  <div class="ph-title">Your targets<br>and the plan.</div>
+</div>
+<div class="cx">
+
+  <div class="slbl">Your journey</div>
+  <div class="al d"><strong>Progressive, sustainable weight loss</strong><br>Current: 70 kg. Our focus: 2–3 kg this month with a slow, moderate deficit. No crash diets, no extreme workouts. Let's build consistency first — results follow naturally.</div>
+
+  <div class="div"></div>
+
+  <div class="slbl">Daily targets</div>
+  <div class="stit">Calories, macros,<br>and what they mean.</div>
+
+  <div class="stats three">
+    <div class="st acc"><div class="stl">Calories</div><div class="stv">1,600</div><div class="stu">kcal daily</div></div>
+    <div class="st gn"><div class="stl">Protein</div><div class="stv">77g</div><div class="stu">1.1g per kg</div></div>
+    <div class="st wn"><div class="stl">Carbs + Fat</div><div class="stv">250g</div><div class="stu">C 210g · F 40g</div></div>
+  </div>
+
+  <div class="macro-bar">
+    <div class="macro-bar-label"><span>Macro split — 1,600 kcal</span><span>308 + 840 + 360 kcal</span></div>
+    <div class="macro-bar-track">
+      <div class="mb-p" style="width:19%"></div>
+      <div class="mb-c" style="width:53%"></div>
+      <div class="mb-f" style="width:22%"></div>
+    </div>
+    <div class="macro-legend">
+      <div class="ml-item"><div class="ml-dot" style="background:#5a8a6f"></div>Protein 77g · 19%</div>
+      <div class="ml-item"><div class="ml-dot" style="background:#a67c52"></div>Carbs 210g · 53%</div>
+      <div class="ml-item"><div class="ml-dot" style="background:#c17f24"></div>Fat 40g · 22%</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ch green"><div class="ct">Why this plan works for you</div></div>
+    <div>
+      <div class="tr"><div class="trm">Moderate deficit</div><div class="trd">200–300 kcal under your maintenance — slow and steady. You'll lose fat, keep energy, and not feel miserable.</div></div>
+      <div class="tr"><div class="trm">High protein</div><div class="trd">77g keeps you full longer, protects muscle during weight loss, and stabilizes blood sugar. Especially important with your busy desk job.</div></div>
+      <div class="tr"><div class="trm">Carb-friendly</div><div class="trd">210g carbs fuel your Zumba sessions and daily activity. You're not cutting carbs — you're being smart about them.</div></div>
+      <div class="tr"><div class="trm">Vegetarian-native</div><div class="trd">Paneer, dal, curd, soya chunks, legumes — everything is built around what you already eat and like.</div></div>
+    </div>
+  </div>
+
+  <div class="div"></div>
+
+  <div class="slbl">Lower back — what to know</div>
+  <div class="al w"><strong>⚠️ Hairline fracture · almost recovered</strong><br>Your plan avoids heavy lower body loading. We're focusing on mobility, core stability, and upper body strength with resistance bands. No squats, deadlifts, or heavy hip thrusts yet. Movement heals — but smart movement.</div>
+
+  <div class="al ok"><strong>✓ Mobility is medicine</strong><br>3 days of dedicated mobility work (full body, upper + lower, and spine-specific) will accelerate recovery and prevent future issues. These count as much as strength days.</div>
+
+  <div class="div"></div>
+
+  <div class="slbl">Supplements — just two</div>
+  <div class="stit">Timing and what<br>each does.</div>
+
+  <div class="supp-item">
+    <div class="supp-icon">💪</div>
+    <div>
+      <div class="supp-name">Beast Life Yeast Protein (24g)</div>
+      <div class="supp-desc">Vegetarian, complete amino acids. Mix with milk, oats, or water anytime after a meal — not on an empty stomach. Can also be added to breakfast (oats, smoothie, pancakes). Helps you hit the 77g protein target on busy days.</div>
+    </div>
+  </div>
+
+  <div class="supp-item">
+    <div class="supp-icon">🧂</div>
+    <div>
+      <div class="supp-name">Magnesium</div>
+      <div class="supp-desc">Supports sleep quality, muscle recovery, and reduces stress. Take once daily in the evening (300–400mg). Especially helpful since you're on a desk job and training for weight loss.</div>
+    </div>
+  </div>
+
+  <div class="al i"><strong>Protein powder timing:</strong> Can be anytime after a meal, or mixed into breakfast itself. No need for complex timing — just whenever fits your day best.</div>
+
+  <div class="div"></div>
+
+  <div class="slbl">How the diet works</div>
+  <div class="card hi">
+    <div class="ch acc"><div class="ct">Each meal slot has 5 options</div></div>
+    <div class="cb">Breakfast, Lunch, Pre-Zumba, Dinner — each has 5 choices. Pick what you feel like eating that day. All options have the same macros, so you're never guessing if you're "on track."
+      <div class="nt d">The 2 starred options (★) are my suggestions — try these first. They're quick, protein-dense, and work especially well on busy days.</div>
+    </div>
+  </div>
+
+  <div class="al ok"><strong>2–3 kg this month:</strong> Be patient. Weight loss is non-linear — you might see 0.5 kg one week, then 1.5 kg the next. As long as the trend is down, you're winning.</div>
+
+</div>
+
+<!-- ═══════════════════ DIET ═══════════════════ -->
+<div id="diet" class="sec-anchor"></div>
+<div class="ph">
+  <div class="ph-eye">Nutrition</div>
+  <div class="ph-title">Your daily meals.<br>Vegetarian, home-cooked.</div>
+</div>
+<div class="cx">
+
+  <div class="al i"><strong>Daily total: 1,600 kcal · P 77g · C 210g · F 40g.</strong> Same structure every day. Zumba is your main activity — fuel it well and recover well.</div>
+
+  <!-- BREAKFAST -->
+  <div class="card">
+    <div class="ch acc"><div class="ct">Breakfast</div><div class="cm">~300 kcal · P 15g · C 45g · F 8g · Within 1 hour of waking</div></div>
+    <div class="cb">
+      <strong>Option 1 — Poha with paneer ★</strong><br>
+      · 1 cup poha (flattened rice)<br>
+      · 50g paneer, diced and fried in 1 tsp oil<br>
+      · Veggies: onion, tomato, peas<br>
+      · 1 small banana on the side<br><br>
+
+      <strong>Option 2 — Idli + sambar with curd ★</strong><br>
+      · 3 idlis<br>
+      · 1 small bowl sambar<br>
+      · 1 small bowl curd (100g)<br>
+      · Chutney on the side<br><br>
+
+      <strong>Option 3 — Oats with milk and nuts</strong><br>
+      · ½ cup oats (dry measure)<br>
+      · 1 cup milk (whole or toned)<br>
+      · 10 almonds or 1 tbsp mixed nuts<br>
+      · 1 small fruit (apple or berries)<br><br>
+
+      <strong>Option 4 — Paratha with curd and fruit</strong><br>
+      · 1 aloo paratha or plain paratha<br>
+      · ½ cup curd<br>
+      · 1 medium fruit (orange, guava, or papaya)<br><br>
+
+      <strong>Option 5 — Peanut butter toast with milk</strong><br>
+      · 2 slices whole wheat bread<br>
+      · 1 tbsp peanut butter<br>
+      · 1 small bowl curd (100g)<br>
+      · Black coffee or green tea (no sugar)<br>
+    </div>
+  </div>
+
+  <!-- LUNCH -->
+  <div class="card">
+    <div class="ch"><div class="ct">Lunch</div><div class="cm">~450 kcal · P 20g · C 65g · F 10g · 12:30–1:30 PM</div></div>
+    <div class="cb">
+      <strong>Option 1 — Dal with roti and curd ★</strong><br>
+      · 1 cup mixed dal (masoor, moong, or chana dal)<br>
+      · 2 rotis<br>
+      · 1 cup any sabzi (palak, mixed vegetables, or methi)<br>
+      · ½ cup curd<br><br>
+
+      <strong>Option 2 — Chana dal with bajra roti ★</strong><br>
+      · 1 cup chana dal curry (with minimal oil)<br>
+      · 2 bajra rotis (millet — higher fiber)<br>
+      · Large salad (cucumber, tomato, onion)<br>
+      · Lemon juice over everything<br><br>
+
+      <strong>Option 3 — Rice with dal and paneer</strong><br>
+      · 150g cooked rice (about 1 cup)<br>
+      · 1 cup dal<br>
+      · 75g paneer curry (tomato-based, not cream-based)<br>
+      · Salad on the side<br><br>
+
+      <strong>Option 4 — Sandwich with paneer and salad</strong><br>
+      · 2 slices whole wheat bread<br>
+      · 50g paneer (sliced or mashed)<br>
+      · Lettuce, tomato, onion, cucumber<br>
+      · 1 tbsp low-fat mayo or hummus<br>
+      · 1 small bowl curd on the side<br><br>
+
+      <strong>Option 5 — Dosa with sambar and paneer filling</strong><br>
+      · 2 dosas<br>
+      · 1 small bowl sambar<br>
+      · 30g paneer inside the dosa<br>
+      · 1 tbsp peanut chutney or coconut chutney<br>
+    </div>
+  </div>
+
+  <!-- PRE-ZUMBA SNACK -->
+  <div class="card">
+    <div class="ch info"><div class="ct">Pre-Zumba Snack</div><div class="cm">~120 kcal · 30–45 min before class</div></div>
+    <div class="cb">
+      · 1 banana + 1 tbsp peanut butter<br>
+      · OR 1 slice bread + 1 tbsp peanut butter + 1 small fruit<br>
+      · OR 1 bowl muesli with milk<br>
+      · Small water bottle to carry to Zumba<br>
+      <div class="nt i">Zumba is intense. You need carbs + some fat for steady energy. Never go on an empty stomach.</div>
+    </div>
+  </div>
+
+  <!-- DINNER -->
+  <div class="card hi">
+    <div class="ch acc"><div class="ct">Dinner <span class="bx d">High protein</span></div><div class="cm">~400 kcal · P 25g · C 50g · F 12g · 7:30–9:00 PM</div></div>
+    <div class="cb">
+      <strong>Option 1 — Paneer butter masala with roti ★</strong><br>
+      · 150g paneer in tomato-based gravy (butter minimal, use oil)<br>
+      · 2 rotis<br>
+      · Side salad or steamed vegetables<br>
+      · 1 small bowl curd<br><br>
+
+      <strong>Option 2 — Rajma with roti and sabzi ★</strong><br>
+      · 1 cup rajma curry (high protein legume)<br>
+      · 2 rotis<br>
+      · Mixed vegetable sabzi<br>
+      · Salad with lemon<br><br>
+
+      <strong>Option 3 — Soya chunks curry with rice</strong><br>
+      · 100g soya chunks in tomato/onion curry<br>
+      · 150g cooked rice<br>
+      · Palak or any leafy green sabzi<br>
+      · ½ cup curd<br><br>
+
+      <strong>Option 4 — Mixed dal with paratha</strong><br>
+      · 1 cup mixed dal<br>
+      · 1 aloo paratha or plain paratha<br>
+      · Salad with veggies<br>
+      · 1 small bowl curd<br><br>
+
+      <strong>Option 5 — Curd rice with vegetables</strong><br>
+      · 150g cooked rice mixed with 1 cup curd<br>
+      · Tempered with 1 tsp oil, mustard seeds, curry leaves<br>
+      · Add peas, carrots, corn<br>
+      · Squeeze of lemon<br>
+      · Pickle on the side<br>
+    </div>
+  </div>
+
+  <div class="div"></div>
+
+  <div class="slbl">Snacks — if hunger hits</div>
+  <div class="stit">8 options. All under<br>100–120 kcal.</div>
+
+  <div class="snack-grid">
+    <div class="snack-card">
+      <div class="snack-card-title">1. Roasted chana — 30g</div>
+      <div class="snack-card-desc">High protein, high fiber. Keeps hunger away for hours. Best snack for a desk job.</div>
+      <div class="snack-card-macro">~110 kcal · P 7g · Fiber-rich · Iron-rich</div>
+    </div>
+    <div class="snack-card">
+      <div class="snack-card-title">2. Makhana (fox nuts) — 1 bowl</div>
+      <div class="snack-card-desc">Light, crunchy, filling. Dry roast with black salt and jeera. Very satisfying without guilt.</div>
+      <div class="snack-card-macro">~90 kcal · Low fat · Low GI</div>
+    </div>
+    <div class="snack-card">
+      <div class="snack-card-title">3. 10 Cashews + Apple</div>
+      <div class="snack-card-desc">Cashews are creamy, apple is crisp. Balanced combo that feels like a treat.</div>
+      <div class="snack-card-macro">~110 kcal · P 4g · Good fat</div>
+    </div>
+    <div class="snack-card">
+      <div class="snack-card-title">4. Sprouts — 1 bowl</div>
+      <div class="snack-card-desc">Raw or lightly salted. High in vitamins and protein for legume-based sprouts.</div>
+      <div class="snack-card-macro">~85 kcal · P 5g · Living food</div>
+    </div>
+    <div class="snack-card">
+      <div class="snack-card-title">5. Curd — 150g with honey</div>
+      <div class="snack-card-desc">Plain curd, no added sugar. 1 tsp honey if you want sweetness. Probiotic + protein.</div>
+      <div class="snack-card-macro">~100 kcal · P 8g · Gut-friendly</div>
+    </div>
+    <div class="snack-card">
+      <div class="snack-card-title">6. Cucumber + Black Salt</div>
+      <div class="snack-card-desc">Unlimited, zero guilt. Stay hydrated, stay satisfied. Perfect for afternoon hunger.</div>
+      <div class="snack-card-macro">~15 kcal per cup · 97% water</div>
+    </div>
+    <div class="snack-card">
+      <div class="snack-card-title">7. Peanut Butter — 1 tbsp + fruit</div>
+      <div class="snack-card-desc">1 tbsp PB with 1 small apple or banana. Protein + healthy fat + carbs.</div>
+      <div class="snack-card-macro">~110 kcal · P 5g · Satiating</div>
+    </div>
+    <div class="snack-card">
+      <div class="snack-card-title">8. Mixed Nuts (unsalted) — 1 handful</div>
+      <div class="snack-card-desc">Almonds, walnuts, peanuts mixed. Slow and mindful eating — not in front of a screen.</div>
+      <div class="snack-card-macro">~100 kcal · P 4g · Brain health</div>
+    </div>
+  </div>
+
+  <div class="al d"><strong>Cheat meals — twice a week is fine.</strong> Pick days consciously (Friday, Saturday). Enjoy without guilt. One meal won't derail 6 clean days. The key is consistency, not perfection.</div>
+
+  <div class="al ok"><strong>Cooking oil rule:</strong> Maximum 2–3 tsp total oil per day across all meals. Use a spoon or oil brush — don't pour directly from the bottle. Hidden cooking oil is the #1 reason diets stall.</div>
+
+</div>
+
+<!-- ═══════════════════ WORKOUT ═══════════════════ -->
+<div id="workout" class="sec-anchor"></div>
+<div class="ph">
+  <div class="ph-eye">Training</div>
+  <div class="ph-title">Your movement plan.<br>Mobility + upper strength.</div>
+</div>
+<div class="cx">
+
+  <div class="slbl">Weekly structure</div>
+  <div class="week-strip">
+    <div class="wday mob"><div class="wd-name">Mon</div><div class="wd-icon">🧘</div><div class="wd-label">Mobility</div></div>
+    <div class="wday work"><div class="wd-name">Tue</div><div class="wd-icon">💪</div><div class="wd-label">Upper Body</div></div>
+    <div class="wday mob"><div class="wd-name">Wed</div><div class="wd-icon">🫀</div><div class="wd-label">Spine Mobility</div></div>
+    <div class="wday rest"><div class="wd-name">Thu</div><div class="wd-icon">🎵</div><div class="wd-label">Zumba / Rest</div></div>
+    <div class="wday mob"><div class="wd-name">Fri</div><div class="wd-icon">🧘</div><div class="wd-label">Full Body Mob</div></div>
+    <div class="wday rest"><div class="wd-name">Sat</div><div class="wd-icon">🎵</div><div class="wd-label">Zumba / Light</div></div>
+    <div class="wday rest"><div class="wd-name">Sun</div><div class="wd-icon">💤</div><div class="wd-label">Rest / Steps</div></div>
+  </div>
+  <div class="nt ok">Zumba on Thu/Sat counts as your cardio. It's energetic, fun, and completes your week. No need for extra running or HIIT.</div>
+
+  <div class="div"></div>
+
+  <div class="slbl">Daily movement & steps</div>
+  <div class="card">
+    <div class="ch green"><div class="ct">10,000 steps every day</div></div>
+    <div class="cb">Includes desk breaks, walks to lunch, evening strolls. Track on StepSetGo or your phone's default step counter. This is your baseline — everything else is bonus.</div>
+  </div>
+
+  <div class="div"></div>
+
+  <div class="slbl">Mobility Days — Monday, Wednesday, Friday</div>
+  <div class="stit">Movement, flexibility,<br>and back health.</div>
+
+  <!-- MONDAY: FULL BODY MOBILITY -->
+  <div class="card">
+    <div class="ch green"><div class="ct">Monday — Full Body Mobility</div><div class="cm">20–25 min · Slow, controlled movements</div></div>
+    <div>
+      <div class="ex-row mob"><div class="ex-n">1</div><div><div class="ex-name">Cat-Cow Stretch</div><div class="ex-sets">10 reps · hands and knees · alternating extension and flexion</div></div></div>
+      <div class="ex-row mob"><div class="ex-n">2</div><div><div class="ex-name">Quadruped Shoulder Rolls</div><div class="ex-sets">10 forward · 10 backward · slow and deliberate</div></div></div>
+      <div class="ex-row mob"><div class="ex-n">3</div><div><div class="ex-name">World's Greatest Stretch</div><div class="ex-sets">5 reps each side · hits shoulders, hips, hamstrings, chest</div></div></div>
+      <div class="ex-row mob"><div class="ex-n">4</div><div><div class="ex-name">Deep Squat Hold</div><div class="ex-sets">30–60 sec hold · hands in front for balance · bodyweight only</div></div></div>
+      <div class="ex-row mob"><div class="ex-n">5</div><div><div class="ex-name">Leg Swings — Forward/Back</div><div class="ex-sets">10 each leg · hold onto something for balance</div></div></div>
+      <div class="ex-row mob"><div class="ex-n">6</div><div><div class="ex-name">Leg Swings — Side to Side</div><div class="ex-sets">10 each leg · opens up hip stability</div></div></div>
+      <div class="ex-row mob"><div class="ex-n">7</div><div><div class="ex-name">90/90 Hip Stretch</div><div class="ex-sets">30 sec each side · seated on floor · deep hip opening</div></div></div>
+      <div class="ex-row mob"><div class="ex-n">8</div><div><div class="ex-name">Thoracic Rotation</div><div class="ex-sets">10 reps each side · on all fours, opening up chest and spine</div></div></div>
+      <div class="ex-row mob"><div class="ex-n">9</div><div><div class="ex-name">Child's Pose Hold</div><div class="ex-sets">60 sec · breathe deeply · relax</div></div></div>
+    </div>
+  </div>
+
+  <!-- WEDNESDAY: SPINE MOBILITY -->
+  <div class="card">
+    <div class="ch green"><div class="ct">Wednesday — Spine Mobility (Lower Back Focus)</div><div class="cm">15–20 min · Very gentle · Back-recovery specific</div></div>
+    <div>
+      <div class="ex-row mob"><div class="ex-n">1</div><div><div class="ex-name">Dead Bug</div><div class="ex-sets">10 reps each side · arms + opposite leg lower · core control · back stays flat on floor</div></div></div>
+      <div class="ex-row mob"><div class="ex-n">2</div><div><div class="ex-name">Glute Bridge Hold</div><div class="ex-sets">3 × 30 sec · squeeze glutes at the top · supports lower back</div></div></div>
+      <div class="ex-row mob"><div class="ex-n">3</div><div><div class="ex-name">Supine Twist (Reclined Spinal Twist)</div><div class="ex-sets">30 sec each side · lying on back · knees drop to one side</div></div></div>
+      <div class="ex-row mob"><div class="ex-n">4</div><div><div class="ex-name">Knee-to-Chest Stretch</div><div class="ex-sets">30 sec each leg · lying on back · pull knee toward chest gently</div></div></div>
+      <div class="ex-row mob"><div class="ex-n">5</div><div><div class="ex-name">Pelvic Tilts</div><div class="ex-sets">15 reps · lying on back · gently engage core · no lower back arch</div></div></div>
+      <div class="ex-row mob"><div class="ex-n">6</div><div><div class="ex-name">Cat-Cow (Slow Version)</div><div class="ex-sets">10 reps · very controlled · mobilize the entire spine</div></div></div>
+      <div class="ex-row mob"><div class="ex-n">7</div><div><div class="ex-name">Child's Pose</div><div class="ex-sets">90 sec hold · breathe into lower back · relax completely</div></div></div>
+    </div>
+  </div>
+
+  <!-- FRIDAY: UPPER + LOWER MOBILITY -->
+  <div class="card">
+    <div class="ch green"><div class="ct">Friday — Upper + Lower Full Body Mobility</div><div class="cm">20–25 min · Flow-based · Gentle strength</div></div>
+    <div>
+      <div class="ex-row mob"><div class="ex-n">1</div><div><div class="ex-name">Arm Circles</div><div class="ex-sets">10 forward · 10 backward · both arms · shoulder mobility</div></div></div>
+      <div class="ex-row mob"><div class="ex-n">2</div><div><div class="ex-name">Inchworm to Push-Up Hold</div><div class="ex-sets">8 reps · walk hands out to plank · hold 3 sec · walk back · dynamic stretch + light upper body</div></div></div>
+      <div class="ex-row mob"><div class="ex-n">3</div><div><div class="ex-name">Hip Circle (Standing)</div><div class="ex-sets">10 clockwise · 10 counterclockwise · both sides · hip mobility</div></div></div>
+      <div class="ex-row mob"><div class="ex-n">4</div><div><div class="ex-name">Deep Lunge Hold with Rotation</div><div class="ex-sets">5 reps each side · front foot forward · twist toward front leg · opens hip flexors</div></div></div>
+      <div class="ex-row mob"><div class="ex-n">5</div><div><div class="ex-name">Seated Forward Fold</div><div class="ex-sets">45 sec hold · hamstring + spine release</div></div></div>
+      <div class="ex-row mob"><div class="ex-n">6</div><div><div class="ex-name">Calf Stretch (Wall)</div><div class="ex-sets">30 sec each leg · foot on wall · lean forward</div></div></div>
+      <div class="ex-row mob"><div class="ex-n">7</div><div><div class="ex-name">Wall Shoulder Stretch</div><div class="ex-sets">30 sec each arm · arm over head · gently lean into wall</div></div></div>
+      <div class="ex-row mob"><div class="ex-n">8</div><div><div class="ex-name">Pigeon Pose (Hip Opener)</div><div class="ex-sets">45 sec each side · deep hip stretch · very restorative</div></div></div>
+    </div>
+  </div>
+
+  <div class="div"></div>
+
+  <div class="slbl">Upper Body Strength — Tuesday</div>
+  <div class="stit">Resistance band work.<br>Pushups, dips, rows.</div>
+
+  <div class="card">
+    <div class="ch dark"><div class="ct">Tuesday — Upper Body Strength with Resistance Bands</div><div class="cm">~30 min · 3 sets each exercise · Controlled tempo</div></div>
+    <div>
+      <div class="ex-row"><div class="ex-n">W</div><div><div class="ex-name">Warm-up: Arm Circles + Band Pull-Aparts</div><div class="ex-sets">10 arm circles + 15 band pull-aparts · activate shoulders</div></div></div>
+      <div class="ex-row"><div class="ex-n">1</div><div><div class="ex-name">Wall Push-Ups or Resistance Band Chest Press</div><div class="ex-sets">3 × 12–15 reps · controlled descent · if doing wall push-ups, hands 1 foot away from wall</div></div></div>
+      <div class="ex-row"><div class="ex-n">2</div><div><div class="ex-name">Resistance Band Rows (Seated or Standing)</div><div class="ex-sets">3 × 12 reps · band looped around feet or door anchor · pull band toward chest · squeeze shoulder blades</div></div></div>
+      <div class="ex-row"><div class="ex-n">3</div><div><div class="ex-name">Overhead Shoulder Press (Band or Dumbbell if available)</div><div class="ex-sets">3 × 10 reps · controlled movement · avoid arching lower back</div></div></div>
+      <div class="ex-row"><div class="ex-n">4</div><div><div class="ex-name">Dips (Chair Dips or Band-Assisted)</div><div class="ex-sets">3 × 8–12 reps · use a chair, bench, or couch · lower slowly · tricep focused</div></div></div>
+      <div class="ex-row"><div class="ex-n">5</div><div><div class="ex-name">Bicep Curls (Band or Water Bottle)</div><div class="ex-sets">3 × 12 reps · squeeze at the top · slow eccentric</div></div></div>
+      <div class="ex-row"><div class="ex-n">6</div><div><div class="ex-name">Lateral Raises (Band)</div><div class="ex-sets">3 × 12 reps · light resistance · shoulder activation · full range</div></div></div>
+    </div>
+  </div>
+
+  <div class="nt ok"><strong>Rest 60–90 sec between sets.</strong> This is not about heavy weight — it's about controlled movement, mind-muscle connection, and building strength safely. The band or your bodyweight is enough.</div>
+
+  <div class="div"></div>
+
+  <div class="slbl">Notes on your training</div>
+  <div class="card">
+    <div>
+      <div class="tr"><div class="trm">Lower back fracture</div><div class="trd">Avoid: Heavy squats, deadlifts, hip thrusts, heavy lower body work. Do: Mobility, light core work, upper body. We're protecting and healing, not testing limits.</div></div>
+      <div class="tr"><div class="trm">Mobility is strength</div><div class="trd">The 3 mobility days are not "rest days" — they're active recovery and injury prevention. These accelerate your back's recovery and keep you moving daily.</div></div>
+      <div class="tr"><div class="trm">Zumba is your cardio</div><div class="trd">Thursday and Saturday Zumba sessions cover your cardio needs. Don't add extra running or HIIT — you've got enough stimulus between mobility and upper body work.</div></div>
+      <div class="tr"><div class="trm">Progressive overload</div><div class="trd">On upper body day, when you can do all 15 reps cleanly, add a stronger resistance band or progress to the next variation (e.g., wall push-ups → incline push-ups).</div></div>
+      <div class="tr"><div class="trm">Consistency beats intensity</div><div class="trd">Show up 5 days a week. Do the work at 70% intensity. You'll get better results than sporadic 100% effort.</div></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════ COACH NOTES ═══════════════════ -->
+<div id="coachnotes" class="sec-anchor"></div>
+<div class="ph">
+  <div class="ph-eye">⚠️ Coach Notes — Internal Only</div>
+  <div class="ph-title">Client context,<br>red flags, progression.</div>
+</div>
+<div class="cx">
+
+  <div class="al w"><strong>INTERNAL USE ONLY</strong> — This section is for coaching notes, check-in templates, and progression tracking. Not for client viewing.</div>
+
+  <div class="div"></div>
+
+  <div class="slbl">Client Profile</div>
+  <div class="stit">Who is Ananya?</div>
+
+  <div class="card">
+    <div class="ch dark"><div class="ct">Summary</div></div>
+    <div class="cb">
+      <strong>22 yrs, desk job (10+ hrs/day), busy schedule, motivated but needs consistency.</strong><br><br>
+      Ananya came with progress photos showing visible weight gain. She's doing Zumba already (good — loves dance/music-based cardio). Lower back hairline fracture is almost recovered. Vegetarian, home + outside food mix. Budget-conscious (₹3,000–5,000/month food). Open to supplements but selective.<br><br>
+      <strong>Key strength:</strong> Moderately active, has doctor clearance, good sleep (7–8 hrs), low stress currently. She WANTS to change — this is a good client to work with if we can nail the habit-building angle.<br><br>
+      <strong>Key risk:</strong> Desk job = sedentary baseline + snacking habits (admitted eating junk at snack time). If we don't fix the snack protocol and oil usage, the deficit won't stick.
+    </div>
+  </div>
+
+  <div class="div"></div>
+
+  <div class="slbl">Red Flags & Watch-For</div>
+
+  <div class="card hi">
+    <div class="ch acc"><div class="ct">1 — Lower back will flare if she gets impatient</div></div>
+    <div class="cb">She's mentioned it's "almost recovered" but hairline fractures are fragile. If week 2 shows slow progress, she might try to add lower body work to speed things up. Pre-emptively tell her: "The mobility days ARE the workout. They're healing your back AND building strength. Don't add squats yet."</div>
+  </div>
+
+  <div class="card hi">
+    <div class="ch acc"><div class="ct">2 — Oil calories are the silent killer</div></div>
+    <div class="cb">She cooks at home sometimes, outside food other times. Home cooking = untracked oil. Outside food = double that. In the first check-in, physically show her how much 1 tsp oil is. Get her an oil brush. This is non-negotiable for 1,600 kcal to work.</div>
+  </div>
+
+  <div class="card hi">
+    <div class="ch acc"><div class="ct">3 — Cheat meals could become 3–4x/week</div></div>
+    <div class="cb">She said "twice a week" but at 22 with friends and office, social eating is high. Monitor week 1–2 check-ins. If she's going 3x+, it's either she's underestimating or feeling deprived. Adjust the plan to make it less strict, not more.</div>
+  </div>
+
+  <div class="card hi">
+    <div class="ch acc"><div class="ct">4 — Snacking is the real issue, not meals</div></div>
+    <div class="cb">She literally said "I eat junk at this time pls help avoid" — snacking is where she's losing the plot. Meal structure is clean (dal, paneer, rotis). But 3 PM office snack? Probably biscuits or chips. This is the #1 place to intervene.</div>
+  </div>
+
+  <div class="div"></div>
+
+  <div class="slbl">Check-In Protocol</div>
+
+  <div class="stit">What to ask each<br>WhatsApp check-in.</div>
+
+  <div class="card">
+    <div class="ch green"><div class="ct">Weekly Check-In Template (Sun/Mon)</div></div>
+    <div class="cb">
+      <strong>Send to Ananya:</strong><br><br>
+      "Hey Ananya! Quick check-in — how was your week?<br><br>
+      1. How many days did you stick to the plan? (meals + snacks)<br>
+      2. Any days you did Zumba? How did you feel during it?<br>
+      3. Mobility days — how did the back feel? Any pain?<br>
+      4. What was the biggest challenge this week — meals, snacks, or motivation?<br>
+      5. Any progress photos to share? (Optional)<br><br>
+      Let's adjust if needed. You're doing great! 💪"
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ch dark"><div class="ct">If Weight Stalls After 2 Weeks</div></div>
+    <div class="cb">
+      <strong>Don't panic. First, troubleshoot:</strong><br>
+      • Oil usage — ask her to track for 3 days. Likely culprit.<br>
+      • Cheat meals — is she doing 2x or actually 3–4x?<br>
+      • Snacking — is she picking from the list or grabbing office biscuits?<br>
+      • Protein powder timing — is she actually taking it or forgetting?<br><br>
+      <strong>What NOT to do:</strong> Drop calories further. That's lazy coaching. Find the leak first. Usually it's hidden oil + extra snacking.
+    </div>
+  </div>
+
+  <div class="div"></div>
+
+  <div class="slbl">Progression Plan</div>
+
+  <div class="stit">Month 1, 2, 3<br>what changes.</div>
+
+  <div class="card">
+    <div class="tr"><div class="trm">Weeks 1–4</div><div class="trd"><strong>Establish baseline.</strong> Stick to 1,600 kcal exactly. Mobility work every assigned day. Lock in the habits. Weight: aim 2–3 kg loss.</div></div>
+    <div class="tr"><div class="trm">Weeks 5–8</div><div class="trd"><strong>Back should be pain-free.</strong> Introduce 1 light lower body day if pain is zero (light leg press with bands, or bodyweight squats). Keep deficit the same. Weight: another 2–3 kg if oil/snacks are controlled.</div></div>
+    <div class="tr"><div class="trm">Weeks 9–12</div><div class="trd"><strong>Increase upper body intensity.</strong> Heavier band resistance or harder variations (incline push-ups, dips with less support). Add 1 more lower body session if back is stable. Maintain 1,600 kcal or assess based on how she feels.</div></div>
+  </div>
+
+  <div class="div"></div>
+
+  <div class="slbl">Communication Style with Ananya</div>
+
+  <div class="card">
+    <div class="ch"><div class="ct">WhatsApp Tone</div></div>
+    <div class="cb">
+      <strong>Warm, encouraging, no BS.</strong><br><br>
+      • She's 22, busy, motivated but young. Use emojis, keep conversational.<br>
+      • "You're doing great!" is nice, but specificity is better: "You crushed 4 days of mobility this week — exactly what your back needed."<br>
+      • When she struggles (back pain, stalls, junk food), acknowledge without judgment: "Oil is sneaky. Let's fix it together" not "You're eating too much oil."<br>
+      • Desk job = probably stress-eating or mindless snacking. Validate that, redirect to the snack list.<br>
+      • Celebrate small wins: "3 kg down is REAL progress. That's fat loss. Keep it up."
+    </div>
+  </div>
+
+  <div class="div"></div>
+
+  <div class="slbl">Beast Life Protein Link</div>
+  <div class="card">
+    <div class="ch info"><div class="ct">Supplement to send</div></div>
+    <div class="cb">
+      <strong>Beast Life Yeast Protein (24g) — Add link after confirming with Ananya</strong><br>
+      Send her the Amazon or Meesho link once confirmed. Timing: Anytime after a meal (not empty stomach). Can mix with milk, oats, water, or add to smoothie. On days when protein intake is short (busy day, light meal), use this to top up. Track: 24g protein per serving — include in daily total.
+    </div>
+  </div>
+
+  <div class="div"></div>
+
+  <div class="slbl">Medical Context</div>
+  <div class="card">
+    <div class="ch amber"><div class="ct">Lower Back Hairline Fracture</div></div>
+    <div class="cb">
+      <strong>Status:</strong> Almost recovered (June 2026). Has doctor clearance.<br><br>
+      <strong>What this means for training:</strong><br>
+      • NO heavy lower body compounds (squats, deadlifts, leg press with heavy load) for 4–6 more weeks.<br>
+      • Mobility work ACCELERATES recovery — encourage mobility days even if she feels fine.<br>
+      • Spine mobility day (Wed) is non-negotiable.<br>
+      • If she reports sharp pain during any exercise, stop and ask if it's different from the fracture pain. Sharp is bad. Soreness is fine.<br><br>
+      <strong>Progression:</strong> After 4 weeks of zero back pain, introduce light leg work. Only if she agrees and pain is genuinely gone.
+    </div>
+  </div>
+
+</div>
+
+<div class="foot">
+  <div class="footn">Ananya Singhai</div>
+  Weight Loss · Mobility · Upper Body Strength<br>
+  Plan Created — June 2026 · Review in 4 weeks<br>
+  Female · 22 yrs · 70 kg · 162 cm · Vegetarian · Home + Resistance Bands<br><br>
+  <span style="font-size:11px;color:rgba(255,255,255,0.18)">This plan is designed for fitness and wellness purposes. Your lower back hairline fracture is almost recovered — continue to listen to your body and stop any exercise that causes sharp pain. If pain persists, consult your doctor.</span>
+</div>
+
+<nav class="bnav">
+  <a href="#overview" onclick="hl(this)"><span class="bnav-icon">📊</span>Overview</a>
+  <a href="#diet" onclick="hl(this)"><span class="bnav-icon">🍽</span>Diet</a>
+  <a href="#workout" onclick="hl(this)"><span class="bnav-icon">🏋️</span>Workout</a>
+  <a href="#coachnotes" onclick="hl(this)"><span class="bnav-icon">⚠️</span>Notes</a>
+</nav>
+
+<script>
+function hl(el) {
+  document.querySelectorAll('.bnav a').forEach(a => a.style.color = '');
+  el.style.color = '#fff';
+  setTimeout(() => { el.style.color = ''; }, 800);
+}
+const anchors = ['overview','diet','workout','coachnotes'];
+const navLinks = document.querySelectorAll('.bnav a');
+function updateNav() {
+  let c = anchors[0];
+  anchors.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && window.scrollY >= el.offsetTop - 80) c = id;
+  });
+  navLinks.forEach(a => {
+    a.style.color = a.getAttribute('href') === '#' + c ? '#ffffff' : '';
+  });
+}
+window.addEventListener('scroll', updateNav, { passive: true });
+updateNav();
+</script>
+</body>
+</html>
